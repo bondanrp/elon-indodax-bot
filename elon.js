@@ -10,6 +10,10 @@ var T = new Twit({
 	access_token: process.env.ACCESS_TOKEN,
 	access_token_secret: process.env.ACCESS_TOKEN_SECRET,
 });
+
+var interval = 10000;
+var jumlah = 1000000;
+
 var tweetTerakhir = '';
 const elonTweet = () => {
 	T.get(
@@ -25,7 +29,7 @@ const elonTweet = () => {
 						tweetTerakhir = val.text;
 						if (val.text.toLowerCase().includes('doge')) {
 							var nonce = Math.floor(Date.now() / 1000);
-							var post = `method=trade&pair=doge_idr&type=buy&price=99999999&idr=1000000&nonce=${nonce}`;
+							var post = `method=trade&pair=doge_idr&type=buy&price=99999999&idr=${jumlah}&nonce=${nonce}`;
 							var sha512screet = CryptoJS.HmacSHA512(post, process.env.IX_SECRET_KEY);
 							const uri = 'https://indodax.com/tapi/';
 							let h = new fetch.Headers();
@@ -65,4 +69,4 @@ const elonTweet = () => {
 		}
 	);
 };
-setInterval(elonTweet, 2000);
+setInterval(elonTweet, interval);
